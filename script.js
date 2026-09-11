@@ -19,10 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
         supabaseClient = window.supabase.createClient(CONFIG.SUPABASE_URL, CONFIG.SUPABASE_ANON_KEY);
     }
 
-    const defaultUsers = [
-        { id: 'nikita', password: 'admin777', name: 'Никита', role: 'admin' }
-    ];
-
     const getLocalUsers = () => {
         const stored = localStorage.getItem(STORAGE_KEY_USERS);
         if (!stored) {
@@ -567,37 +563,37 @@ document.addEventListener('DOMContentLoaded', () => {
 
     if (addNewsForm) {
         addNewsForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const title = document.getElementById('newsTitle').value.trim();
-            const category = document.getElementById('newsCategory').value;
-            const author = document.getElementById('newsAuthor').value.trim();
-            const content = document.getElementById('newsContent').value.trim();
+                e.preventDefault();
+                const title = document.getElementById('newsTitle').value.trim();
+                const category = document.getElementById('newsCategory').value;
+                const author = document.getElementById('newsAuthor').value.trim();
+                const content = document.getElementById('newsContent').value.trim();
 
             const dateStr = new Date().toLocaleDateString('ru-RU', { day: '2-digit', month: '2-digit', year: 'numeric' });
 
             const newPost = { title, category, author, content, created_at: dateStr };
 
-            if (supabaseClient) {
+                    if (supabaseClient) {
                 await supabaseClient.from('news').insert([newPost]);
-            } else {
-                newPost.id = Date.now();
-                digestPosts.unshift(newPost);
-            }
+                    } else {
+                        newPost.id = Date.now();
+                        digestPosts.unshift(newPost);
+                    }
 
-            addNewsForm.reset();
+                    addNewsForm.reset();
             if (addNewsModal) addNewsModal.classList.remove('active');
-            await loadDigest();
-        });
+                    await loadDigest();
+            });
     }
 
     window.deleteDigestPost = async (id) => {
         if (confirm('Удалить эту заметку из журнала?')) {
-            if (supabaseClient) {
-                await supabaseClient.from('news').delete().eq('id', id);
-            } else {
-                digestPosts = digestPosts.filter(p => p.id !== id);
-            }
-            await loadDigest();
+                if (supabaseClient) {
+                    await supabaseClient.from('news').delete().eq('id', id);
+                } else {
+                    digestPosts = digestPosts.filter(p => p.id !== id);
+                }
+                await loadDigest();
         }
     };
 

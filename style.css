@@ -1557,3 +1557,76 @@ body {
         display: block;
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* ================= АДАПТАЦИЯ КОНТАКТОВ ИНЖЕНЕРА ================= */
+
+@media (max-width: 768px) {
+
+    .engineer-banner {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 24px;
+        padding: 24px 20px;
+    }
+
+    .engineer-banner-left {
+        width: 100%;
+        max-width: none;
+        gap: 16px;
+        align-items: flex-start;
+    }
+
+    .engineer-banner-info {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .engineer-banner-info h2 {
+        font-size: 22px;
+        line-height: 1.25;
+    }
+
+    .engineer-banner-info p {
+        font-size: 13px;
+    }
+
+    .engineer-banner-actions {
+        width: 100%;
+        min-width: 0;
+        gap: 10px;
+    }
+
+    .contact-cta-btn {
+        width: 100%;
+        min-width: 0;
+        padding: 12px 14px;
+    }
+
+    .cta-text {
+        min-width: 0;
+        flex: 1;
+    }
+
+    .cta-text span,
+    .cta-text strong {
+        overflow-wrap: anywhere;
+        word-break: break-word;
+    }
+
+    .cta-text strong {
+        font-size: 14px;
+    }
+}
