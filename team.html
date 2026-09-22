@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <link rel="icon" href="/favicon.png" type="image/png">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Штат службы и структура | NIKBOWLING</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+</head>
+<body>
+
+    <div class="ambient-glow"></div>
+    <div class="bg-grid"></div>
+
+    <!-- ШАПКА -->
+    <header class="header">
+        <div class="container header-content">
+            <a href="index.html" class="logo">
+                <img src="logo.png" alt="NIKBOWLING" class="logo-img">
+            </a>
+
+            <nav class="nav">
+                <a href="index.html#services" class="nav-item">Узлы оборудования</a>
+                <a href="index.html#specialization" class="nav-item">Специализация</a>
+                <a href="index.html#news" class="nav-item">Новости</a>
+                <a href="catalog.html" class="nav-item">Каталог</a>
+                <a href="index.html#contacts" class="nav-item">Контакты</a>
+                <a href="index.html#request" class="nav-item">Оставить заявку</a>
+            </nav>
+
+            <div class="header-auth">
+                <div class="user-pill" id="userProfileMenu" style="display: none;">
+                    <div class="user-pill-avatar" id="userAvatarText">К</div>
+                    <div class="user-pill-info">
+                        <span class="user-pill-name" id="userDisplayName">Пользователь</span>
+                        <span class="user-pill-role" id="userRoleBadge">Клиент</span>
+                    </div>
+                    <button class="btn-pill-logout" id="logoutBtn" title="Выйти">✕</button>
+                </div>
+                <a href="index.html" class="btn btn-secondary btn-sm">← На главную</a>
+            </div>
+        </div>
+    </header>
+
+    <main class="section">
+        <div class="container">
+            <div class="team-header-row reveal active">
+                <div class="section-title-wrap" style="margin-bottom: 0;">
+                    <span class="section-kicker">ОРГАНИЗАЦИОННАЯ СТРУКТУРА</span>
+                    <h2>Инженерный штат NIKBOWLING</h2>
+                    <p>Иерархия технической службы: руководство, старшие инженеры систем и дежурные механики смен.</p>
+                </div>
+
+                <!-- Кнопка видна только администратору -->
+                <button class="btn btn-primary" id="openAddStaffModalBtn" style="display: none;">
+                    + Добавить сотрудника
+                </button>
+            </div>
+
+            <!-- ИЕРАРХИЧЕСКАЯ ПИРАМИДА -->
+            <div class="pyramid-container reveal active">
+                
+                <!-- 1-Й УРОВЕНЬ: РУКОВОДСТВО (ВЕРШИНА ПИРАМИДЫ) -->
+                <div class="pyramid-tier tier-apex">
+                    <div class="tier-label">
+                        <span class="tier-pill tier-pill-gold">УРОВЕНЬ I • ВЕРШИНА</span>
+                        <span class="tier-desc">Главный Инженер & Руководство</span>
+                    </div>
+                    <div class="tier-grid grid-apex" id="tier1Container"></div>
+                </div>
+
+                <div class="pyramid-connector">
+                    <div class="connector-line"></div>
+                </div>
+
+                <!-- 2-Й УРОВЕНЬ: ВЕДУЩИЕ ИНЖЕНЕРЫ -->
+                <div class="pyramid-tier tier-mid">
+                    <div class="tier-label">
+                        <span class="tier-pill tier-pill-blue">УРОВЕНЬ II • СТАРШИЙ СОСТАВ</span>
+                        <span class="tier-desc">Ведущие инженеры оборудования и скоринга</span>
+                    </div>
+                    <div class="tier-grid grid-mid" id="tier2Container"></div>
+                </div>
+
+                <div class="pyramid-connector">
+                    <div class="connector-line"></div>
+                </div>
+
+                <!-- 3-Й УРОВЕНЬ: БАЗА ПИРАМИДЫ (ЛИНЕЙНЫЕ ТЕХНИКИ) -->
+                <div class="pyramid-tier tier-base">
+                    <div class="tier-label">
+                        <span class="tier-pill tier-pill-green">УРОВЕНЬ III • БАЗА</span>
+                        <span class="tier-desc">Дежурные техники и механики линий</span>
+                    </div>
+                    <div class="tier-grid grid-base" id="tier3Container"></div>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <!-- МОДАЛЬНОЕ ОКНО ДОБАВЛЕНИЯ СОТРУДНИКА (ADMIN ONLY) -->
+    <div class="modal-layer" id="addStaffModal">
+        <div class="modal-box">
+            <button class="modal-exit-btn" id="closeAddStaffModalBtn">✕</button>
+            <div class="modal-head">
+                <h3>Добавить сотрудника в штат</h3>
+                <p>Выберите уровень пирамиды и укажите специализацию</p>
+            </div>
+
+            <form id="addStaffForm" class="auth-fields">
+                <div class="form-field">
+                    <label for="staffName">Имя и фамилия сотрудника</label>
+                    <input type="text" id="staffName" required placeholder="Например: Артем Васильев">
+                </div>
+
+                <div class="form-field">
+                    <label for="staffPosition">Должность / Специализация</label>
+                    <input type="text" id="staffPosition" required placeholder="Например: Инженер-механик VIA Bowling">
+                </div>
+
+                <div class="form-field">
+                    <label for="staffLevel">Уровень в пирамиде</label>
+                    <select id="staffLevel" required>
+                        <option value="1">Уровень 1: Руководство (Вершина)</option>
+                        <option value="2">Уровень 2: Ведущие инженеры (Средний)</option>
+                        <option value="3" selected>Уровень 3: Дежурные техники (База)</option>
+                    </select>
+                </div>
+
+                <div class="form-row-2">
+                    <div class="form-field">
+                        <label for="staffPhone">Телефон (необязательно)</label>
+                        <input type="text" id="staffPhone" placeholder="+7 999 000 00 00">
+                    </div>
+                    <div class="form-field">
+                        <label for="staffTg">Telegram (необязательно)</label>
+                        <input type="text" id="staffTg" placeholder="@username">
+                    </div>
+                </div>
+
+                <div class="form-field">
+                    <label for="staffPhoto">Ссылка на фото (необязательно)</label>
+                    <input type="url" id="staffPhoto" placeholder="https://example.com/photo.jpg">
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-block btn-glow" id="submitStaffBtn">
+                    Сохранить в пирамиду
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-row">
+                <div class="footer-copy">
+                    <span class="logo-brand">NIK<strong>BOWLING</strong></span>
+                    <p>Профессиональный сервис боулинга <strong>VIA Bowling</strong>, <strong>QubicaAMF</strong> и программ подсчета очков <strong>Steltronic</strong>.</p>
+                </div>
+                <div class="footer-meta">
+                    <span>Глав.Инженер: <strong style="color: var(--red);">Никита</strong> (+7 985 289 54 50)</span>
+                </div>
+            </div>
+
+            <!-- Строка с авторством и копирайтом -->
+            <div class="footer-bottom-line">
+                <span>© 2026 NIKBOWLING. Все права защищены.</span>
+                <div class="dev-credit">
+                    <span>Разработка и архитектура:</span>
+                    <!-- Укажите свое имя и ссылку на Telegram или GitHub -->
+                    <a href="https://t.me/lenaurs" target="_blank" rel="noopener" class="dev-link">
+                        <span class="dev-tag">&lt;/&gt;</span>
+                        <strong>Азизов Азиз Алифович</strong>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="team.js"></script>
+</body>
+</html>

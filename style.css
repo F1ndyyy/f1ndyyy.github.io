@@ -1630,3 +1630,248 @@ body {
         font-size: 14px;
     }
 }
+
+
+
+
+
+
+/* ================= ИЕРАРХИЧЕСКАЯ ПИРАМИДА ШТАТА ================= */
+.team-header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 40px;
+    gap: 20px;
+}
+
+.pyramid-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
+    max-width: 1100px;
+    margin: 0 auto;
+}
+
+.pyramid-tier {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.tier-label {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.tier-pill {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border-radius: 20px;
+}
+
+.tier-pill-gold { background: rgba(245, 158, 11, 0.15); color: var(--accent); border: 1px solid rgba(245, 158, 11, 0.4); }
+.tier-pill-blue { background: rgba(56, 189, 248, 0.15); color: var(--blue); border: 1px solid rgba(56, 189, 248, 0.4); }
+.tier-pill-green { background: rgba(16, 185, 129, 0.15); color: var(--green); border: 1px solid rgba(16, 185, 129, 0.4); }
+
+.tier-desc {
+    font-size: 13px;
+    color: var(--text-dim);
+    font-weight: 500;
+}
+
+/* Сетки для разных уровней пирамиды */
+.tier-grid {
+    display: grid;
+    gap: 20px;
+    width: 100%;
+}
+
+.grid-apex {
+    max-width: 440px; /* Вершина: одна широкая акцентная карточка */
+    grid-template-columns: 1fr;
+}
+
+.grid-mid {
+    max-width: 780px; /* Средний уровень: 2 карточки */
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+}
+
+.grid-base {
+    max-width: 1100px; /* Основание: 3-4 карточки */
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+}
+
+/* Линия-коннектор между уровнями */
+.pyramid-connector {
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.connector-line {
+    width: 2px;
+    height: 100%;
+    background: linear-gradient(180deg, var(--border-hover) 0%, rgba(245, 158, 11, 0.4) 50%, var(--border-hover) 100%);
+}
+
+/* Карточки сотрудников */
+.staff-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.staff-card:hover {
+    transform: translateY(-3px);
+    border-color: var(--border-hover);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Оформление карточки вершины (Никита) */
+.tier-1-card {
+    border-color: rgba(245, 158, 11, 0.4);
+    background: linear-gradient(180deg, rgba(245, 158, 11, 0.06) 0%, rgba(20, 27, 39, 0.95) 100%);
+    box-shadow: 0 10px 30px rgba(245, 158, 11, 0.08);
+}
+
+.tier-2-card {
+    border-color: rgba(56, 189, 248, 0.25);
+}
+
+.staff-card-top {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.staff-avatar-placeholder {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    background: var(--bg-surface);
+    border: 2px solid var(--accent);
+    color: var(--accent);
+    font-size: 20px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.staff-avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid var(--accent);
+    flex-shrink: 0;
+}
+
+.staff-meta {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.staff-badge {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: var(--text-dim);
+    letter-spacing: 0.5px;
+}
+
+.staff-name {
+    font-size: 17px;
+    font-weight: 700;
+    color: var(--text-main);
+}
+
+.staff-role {
+    font-size: 13px;
+    color: var(--text-muted);
+    line-height: 1.35;
+}
+
+.staff-contacts {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    padding-top: 10px;
+    border-top: 1px solid var(--border);
+}
+
+.staff-contact-link {
+    font-size: 12px;
+    color: var(--text-muted);
+    text-decoration: none;
+    transition: color 0.2s ease;
+}
+
+.staff-contact-link:hover {
+    color: var(--accent);
+}
+
+.btn-staff-del {
+    align-self: flex-start;
+    background: none;
+    border: none;
+    color: var(--red);
+    font-size: 11px;
+    cursor: pointer;
+    padding: 2px 0;
+}
+
+.btn-staff-del:hover {
+    text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+    .team-header-row {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+}
+
+/* Фикс двухколоночной строки в модальных окнах */
+.form-row-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    width: 100%;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    min-width: 0; /* Запрещает input распирать ячейку сетки наружу */
+    width: 100%;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box; /* Включает padding в общую ширину поля */
+}
+
+/* На мобильных экранах переводим в 1 колонку */
+@media (max-width: 480px) {
+    .form-row-2 {
+        grid-template-columns: 1fr;
+    }
+}
